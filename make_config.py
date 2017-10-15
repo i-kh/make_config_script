@@ -5,14 +5,20 @@ import argparse
 def collect_env_properties(env_prefix, excluded_sections=None,
                            excluded_variables=None, excluded=None):
     """
-
-    :param env_prefix: Environement prefi name
+    Collects config properties from environment variables
+    :param env_prefix: Environment prefix name
     :type env_prefix: str
     :param excluded_sections: Names ot the sections excluded
     :param excluded_variables: Names of the variables excluded
     :param excluded: Full names of variables excluded
                     [ENV_PREFIX_SECTION_NAME_VARIABLE_NAME]
-    :return:
+    :return: Dict containing config information
+            Example:
+            {'section_name1': {'variable1': value1, 'variable2': value2},
+            'section_name2': {'variable3': value3, ..., 'variableN': valueN},
+            ....
+            }
+    :rtype: dict
     """
     props = {}
     excluded = excluded or []
@@ -62,7 +68,6 @@ def make_file(data, file_name=None):
     Stores config data into the file
     :param data: config data to store
     :param file_name: config file name
-    :return:
     """
     file_name = file_name or 'conf.ini'
     if len(file_name.split('.')) < 2:
