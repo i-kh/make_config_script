@@ -20,6 +20,8 @@ def collect_env_properties(env_prefix, excluded_sections=None,
                                  (excluded_sections or '').split(',')))
     excluded_variables = list(map(lambda s: s.lower(),
                                   (excluded_variables or '').split(',')))
+    if env_prefix[-1] != '_':
+        env_prefix = "{env_prefix}_".format(env_prefix=env_prefix)
 
     for (env_name, val) in os.environ.items():
         if env_name not in excluded and env_name.startswith(env_prefix):
