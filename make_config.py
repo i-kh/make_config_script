@@ -46,16 +46,27 @@ def main():
                         help='Excluded properties names [VARIABLE_NAME]')
     parser.add_argument('-ev', '--excluded_variables',
                         help='Excluded section names [SECTION_NAME]')
+    parser.add_argument('-n', '--name', help='Config file name')
     args = parser.parse_args()
     make_file(collect_env_properties(args.prefix,
                                      excluded=args.excluded,
                                      excluded_variables=args.excluded_variables,
-                                     excluded_sections=args.excluded_sections))
+                                     excluded_sections=args.excluded_sections),
+              args.name)
 
 
-def make_file(d):
-    with open('conf.ini', mode='w+') as f:
-        for section, section_val in d.items():
+def make_file(data, file_name=None):
+    """
+    Stores config data into the file
+    :param data: config data to store
+    :param file_name: config file name
+    :return:
+    """
+    file_name = file_name or 'conf.ini'
+    if len(file_name.split('.')) < 2:
+        file_name = "{file_name}.ini".format(file_name=file_name)
+    with open(file_name, mode='w+') as f:
+        for section, section_val in data.items():
             f.write('[{section_name}]\n'.format(section_name=section))
             for key, val in section_val.items():
                 f.write('{key} = {val}\n'.format(key=key, val=val))
