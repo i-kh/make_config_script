@@ -78,6 +78,3 @@ def make_file(data, file_name=None):
             for key, val in section_val.items():
                 f.write('{key} = {val}\n'.format(key=key, val=val))
             f.write('\n')
-
-
-main()
